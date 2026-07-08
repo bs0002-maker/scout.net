@@ -3,78 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scout.Net - Conectando el talento con la oportunidad</title>
+    <title>Scout.Net - Dashboard de Reclutamiento</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
                     },
                     colors: {
                         brand: {
-                            50: '#f4fbf4',
-                            100: '#e5f7e6',
-                            200: '#ceeed0',
-                            300: '#a7e0aa',
-                            400: '#75cb7a',
-                            500: '#10b981', /* Emerald accent for premium sports look */
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                            neon: '#39ff14', /* Neon green highlights */
-                        },
-                        darkBg: '#090a0f',
-                        darkSurface: '#12141c',
-                        darkCard: '#1a1d29'
+                            orange: '#ff5a00',      /* Bright athletic orange */
+                            orangeHover: '#e04f00', /* Deeper orange for hover states */
+                            orangeLight: '#ffede5', /* Soft orange tint */
+                            black: '#09090b',       /* Pure dark zinc/black */
+                            surface: '#121214',     /* Dark surface cards */
+                            surfaceCard: '#1a1a1e', /* Card element background */
+                            surfaceCardHover: '#222227', /* Card hover */
+                            border: '#2e2e33'       /* Smooth dark borders */
+                        }
                     },
                     boxShadow: {
-                        neonGlow: '0 0 15px rgba(16, 185, 129, 0.3)',
-                        neonBtn: '0 0 10px rgba(57, 255, 20, 0.4)'
+                        orangeGlow: '0 0 20px rgba(255, 90, 0, 0.25)',
+                        orangeBtn: '0 0 12px rgba(255, 90, 0, 0.4)'
                     }
                 }
             }
         }
     </script>
+    
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #090a0f;
-            color: #f3f4f6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
             overflow-x: hidden;
         }
-        /* Custom scrollbar */
+        /* Custom scrollbars */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #090a0f;
+            background: #09090b;
         }
         ::-webkit-scrollbar-thumb {
-            background: #1a1d29;
-            border-radius: 4px;
+            background: #1a1a1e;
+            border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #10b981;
+            background: #ff5a00;
         }
-        .glow-hover:hover {
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-            border-color: #10b981;
+        /* Custom Animations */
+        .pulse-orange {
+            animation: pulseOrange 2s infinite;
+        }
+        @keyframes pulseOrange {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 90, 0, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 90, 0, 0); }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col justify-between">
 
     <script>
-        // Local state for the prototype
+        // Global State
         const STATE = {
-            currentTab: 'discover', // discover, profile, ai-scout, pitch, messages
-            userRole: 'scout', // scout, athlete
+            currentTab: 'discover', // 'discover' or 'ai-scout'
+            userRole: 'scout', // 'scout' (Club/Cazatalentos) or 'athlete' (Soy Deportista)
             selectedAthlete: null,
             searchQuery: '',
             filterSport: 'Todos',
@@ -85,18 +86,17 @@
                     id: 1,
                     name: "Alex Winik",
                     age: 18,
-                    sport: "Fútbol (Futsal / 11)",
+                    sport: "Fútbol Futsal",
                     position: "Arquero",
                     clubActual: "Pinocho (Futsal) / Libre",
                     location: "Villa Urquiza, CABA",
                     height: "1.87 m",
                     weight: "82 kg",
                     foot: "Derecho",
-                    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                    youtubeId: "jd8IPGf4dKM", // Active futsal goalkeeper challenge/highlights
                     stats: { "Reflejos": 92, "Juego Aéreo": 85, "Mano a Mano": 89, "Saque con pie": 78, "Mentalidad": 88 },
-                    bio: "Arquero con gran porte físico, líder bajo los tres palos. Formado en Pinocho. Busco dar el salto al fútbol 11 profesional. Comprometido 100% con los entrenamientos diarios.",
+                    bio: "Arquero con gran porte físico, líder bajo los tres palos. Formado en Pinocho. Busco dar el salto al fútbol 11 profesional en CABA. Comprometido 100% con los entrenamientos diarios.",
                     avatar: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=200&h=200",
-                    cover: "https://images.unsplash.com/photo-1510563800743-aed2364902b9?auto=format&fit=crop&q=80&w=600",
                     isSaved: false
                 },
                 {
@@ -110,11 +110,10 @@
                     height: "1.75 m",
                     weight: "68 kg",
                     foot: "Izquierdo",
-                    videoUrl: "",
+                    youtubeId: "vuI_qmXAskw", // Racing Club vs 17 de Agosto Futsal/Football goals
                     stats: { "Velocidad": 94, "Regate": 91, "Definición": 86, "Resistencia": 82, "Asistencias": 79 },
                     bio: "Extremo zurdo súper veloz, encarador y con excelente uno contra uno. Busco pruebas en clubes de Primera B o Metropolitana.",
                     avatar: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&q=80&w=200&h=200",
-                    cover: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=600",
                     isSaved: false
                 },
                 {
@@ -128,11 +127,10 @@
                     height: "1.70 m",
                     weight: "61 kg",
                     foot: "Derecha (Revés a dos manos)",
-                    videoUrl: "",
+                    youtubeId: "lx3x1HnmFGs", // Copa América Futsal/Sports Highlights
                     stats: { "Drive": 88, "Revés": 85, "Servicio": 80, "Movilidad": 90, "Táctica": 86 },
                     bio: "Jugadora de circuito nacional amateur, buscando sponsors o apoyo de clubes de tenis en CABA para dar el salto al circuito profesional ITF.",
-                    avatar: "https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?auto=format&fit=crop&q=80&w=200&h=200",
-                    cover: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&q=80&w=600",
+                    avatar: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?auto=format&fit=crop&q=80&w=200&h=200",
                     isSaved: false
                 },
                 {
@@ -140,32 +138,72 @@
                     name: "Lautaro Castro",
                     age: 23,
                     sport: "Fútbol 11",
-                    position: "Mediocampista Central",
+                    position: "Mediocampista",
                     clubActual: "Comunicaciones (Reserva)",
                     location: "Agronomía, CABA",
                     height: "1.80 m",
                     weight: "75 kg",
                     foot: "Derecho",
-                    videoUrl: "",
+                    youtubeId: "6cDbup9HG7Q", // Highlights Torneo Regional
                     stats: { "Pase Corto": 90, "Visión": 88, "Recuperación": 84, "Físico": 82, "Disciplina": 95 },
                     bio: "Volante de marca y distribución. Capitán y líder. Excelente lectura de juego y transición rápida de balón.",
                     avatar: "https://images.unsplash.com/photo-1517466787929-bc90951d0974?auto=format&fit=crop&q=80&w=200&h=200",
-                    cover: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=600",
+                    isSaved: false
+                },
+                {
+                    id: 5,
+                    name: "Camila Rossi",
+                    age: 20,
+                    sport: "Fútbol Femenino",
+                    position: "Mediocampista",
+                    clubActual: "Club Excursionistas (Reserva)",
+                    location: "Belgrano, CABA",
+                    height: "1.68 m",
+                    weight: "59 kg",
+                    foot: "Derecha",
+                    youtubeId: "fWNZSzQKLc0", // Torneo Promocional Femenino/Amateur matches
+                    stats: { "Control de balón": 92, "Pase Largo": 87, "Táctico": 89, "Agilidad": 85, "Resistencia": 91 },
+                    bio: "Mediocampista creativa con visión de juego. Especialista en tiros libres y pases entrelíneas. Busco consolidación en Primera División.",
+                    avatar: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=200&h=200",
+                    isSaved: false
+                },
+                {
+                    id: 6,
+                    name: "Tomás Silva",
+                    age: 22,
+                    sport: "Fútbol Futsal",
+                    position: "Delantero",
+                    clubActual: "Club Parque / Libre",
+                    location: "Villa del Parque, CABA",
+                    height: "1.78 m",
+                    weight: "73 kg",
+                    foot: "Ambidiestro",
+                    youtubeId: "vuI_qmXAskw", // Futsal match plays
+                    stats: { "Potencia": 89, "Definición": 93, "Velocidad": 88, "Drible": 90, "Presión": 85 },
+                    bio: "Delantero explosivo, facilidad para girar en el área y rematar con ambos perfiles. Experiencia en torneos metropolitanos competitivos.",
+                    avatar: "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&q=80&w=200&h=200",
                     isSaved: false
                 }
             ],
             messages: [
-                { id: 1, sender: "Excursionistas (Coordinador)", text: "Hola Juan, nos interesó el perfil de Alex. ¿Está disponible para realizar una prueba esta semana en el Bajo Belgrano?", time: "Ayer" },
-                { id: 2, sender: "Pinocho Futsal (DT)", text: "Excelente rendimiento en el último partido. Queremos charlar sobre la renovación.", time: "Hace 2 días" }
+                { id: 1, sender: "C.A. Excursionistas (Coordinación)", text: "Hola, nos interesó el perfil de Alex Winik. ¿Está disponible para realizar una prueba esta semana en Belgrano?", time: "Hace 10 min", fromScout: true },
+                { id: 2, sender: "Pinocho Futsal (DT)", text: "Tiene el alta médica lista. Mandale las planillas así coordinamos.", time: "Ayer", fromScout: false }
             ],
             notifications: [
-                { text: "Un cazatalentos de River Plate vio tu perfil", type: "view", icon: "fa-eye", color: "text-blue-400" },
-                { text: "Coordinador de Excursionistas te envió un mensaje", type: "message", icon: "fa-envelope", color: "text-brand-500" },
-                { text: "Tu video destacado superó las 150 reproducciones", type: "milestone", icon: "fa-fire", color: "text-amber-500" }
+                { text: "Un cazatalentos de River Plate vio tu perfil", type: "view", icon: "fa-eye" },
+                { text: "Club Excursionistas te envió una consulta directa", type: "message", icon: "fa-envelope" }
             ]
         };
 
-        // Custom alert utility (no window.alert allowed)
+        // Fallback for avatar images that might fail loading
+        function handleImageError(imgElement, athleteName) {
+            imgElement.onerror = null; // Prevent infinite loops
+            const initials = athleteName.split(' ').map(n => n[0]).join('').toUpperCase();
+            // Replace with high contrast Orange SVGs representing initials
+            imgElement.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(athleteName)}&background=ff5a00&color=ffffff&bold=true&size=128`;
+        }
+
+        // Custom alert utility (no alert Allowed)
         function showToast(message, type = 'success') {
             const toast = document.getElementById('custom-toast');
             const toastText = document.getElementById('toast-text');
@@ -173,10 +211,10 @@
             
             toastText.textContent = message;
             toast.className = `fixed bottom-5 right-5 z-50 flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl border transition-all duration-300 transform translate-y-0 opacity-100 ${
-                type === 'success' ? 'bg-zinc-900 border-brand-500 text-brand-400 shadow-brand-500/10' : 'bg-zinc-900 border-rose-500 text-rose-400 shadow-rose-500/10'
+                type === 'success' ? 'bg-zinc-950 border-brand-orange text-white shadow-brand-orange/10' : 'bg-zinc-950 border-red-500 text-red-400'
             }`;
             
-            toastIcon.className = `fa-solid ${type === 'success' ? 'fa-circle-check text-brand-500' : 'fa-circle-exclamation text-rose-500'} text-xl`;
+            toastIcon.className = `fa-solid ${type === 'success' ? 'fa-circle-check text-brand-orange' : 'fa-circle-exclamation text-red-500'} text-xl`;
 
             setTimeout(() => {
                 toast.classList.add('translate-y-10', 'opacity-0');
@@ -187,23 +225,22 @@
     </script>
 
     <script>
-        // Calls the Gemini API with exponential backoff to act as "Scouty AI Assistant"
         async function askScouty(promptText) {
             const apiKey = ""; // Canvas handles dynamic key assignment in runtime
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
             
-            // Build system prompt based on Scout.Net project specs
-            const systemPrompt = `Actúas como 'Scouty', el Asistente de Inteligencia Artificial de Scout.Net (plataforma argentina de scouting deportivo para conectar jóvenes de 15 a 35 años con clubes y reclutadores, inspirada en problemas reales como la falta de contactos directos en clubes).
-Tu tono debe ser súper alentador, sumamente conocedor del fútbol amateur y profesional argentino (fútbol de CABA, ligas metropolitanas, torneos de futsal como Pinocho, o clubes como Excursionistas). 
-Ayuda a reclutadores a filtrar talentos basándote en la siguiente base de datos simulada de Scout.Net, y ayuda a los atletas a mejorar sus estadísticas y videos de highlights para llamar la atención.
+            const systemPrompt = `Actúas como 'Scouty', el Asistente Inteligente de Scout.Net (plataforma de scouting deportivo en Buenos Aires para jóvenes de 15 a 35 años).
+Tu personalidad es profesional, deportiva, directa y de gran ayuda para cazatalentos de clubes y atletas de CABA.
+La paleta del proyecto es naranja, negra y blanca. Tenés acceso a esta base de datos local para recomendar talentos:
 
-Base de datos actual de Scout.Net:
-1. Alex Winik (18 años, Arquero de Pinocho Futsal, mide 1.87m, Reflejos 92, busca dar el salto a fútbol 11).
-2. Mateo Fernández (19 años, Extremo/Delantero zurdo del Club Fénix juvenil, muy veloz, velocidad 94, regate 91).
-3. Sofía Martínez (21 años, Tenis Singlista, Club Harrods, drive 88, busca sponsors).
-4. Lautaro Castro (23 años, Mediocampista central de Comunicaciones Reserva, excelente pase corto 90 y disciplina 95).
+1. Alex Winik (18 años, Arquero de Pinocho Futsal, Reflejos: 92, Saque: 78).
+2. Mateo Fernández (19 años, Extremo veloz de Club Fénix, Velocidad: 94, Regate: 91).
+3. Sofía Martínez (21 años, Tenista de Harrods Belgrano, Drive: 88, busca sponsors).
+4. Lautaro Castro (23 años, Volante central de Comunicaciones Reserva, Pase Corto: 90, Disciplina: 95).
+5. Camila Rossi (20 años, Volante creativa de Excursionistas Reserva, Control: 92, Resistencia: 91).
+6. Tomás Silva (22 años, Delantero del Club Parque, Definición: 93, Drible: 90).
 
-Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasmo. Sé breve, enfocado en el fútbol de Argentina y optimista.`;
+Da respuestas optimistas, breves (máximo 4-5 renglones) y utiliza emojis deportivos.`;
 
             const payload = {
                 contents: [{ parts: [{ text: promptText }] }],
@@ -213,7 +250,7 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
             };
 
             let delay = 1000;
-            const maxRetries = 4;
+            const maxRetries = 3;
             
             for (let attempt = 0; attempt < maxRetries; attempt++) {
                 try {
@@ -233,11 +270,11 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
                     }
                     
                     const result = await response.json();
-                    return result.candidates?.[0]?.content?.parts?.[0]?.text || "No obtuve respuesta de Scouty. ¡Intentalo de nuevo!";
+                    return result.candidates?.[0]?.content?.parts?.[0]?.text || "No pude conectar con Scouty. ¡Probá de nuevo!";
                 } catch (error) {
                     if (attempt === maxRetries - 1) {
-                        console.error("Gemini API Error after retries:", error);
-                        return "Scouty está procesando muchos análisis de jugadores ahora mismo. ¡Probá de nuevo en unos instantes!";
+                        console.error("Gemini API Error:", error);
+                        return "Scouty está analizando jugadas en este momento. ¡Por favor intentá de nuevo en unos segundos!";
                     }
                     await new Promise(resolve => setTimeout(resolve, delay));
                     delay *= 2;
@@ -246,704 +283,586 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
         }
     </script>
 
-    <!-- Toast Message System -->
+    <!-- Toast Notification Wrapper -->
     <div id="custom-toast" class="hidden transition-all duration-300 transform translate-y-10 opacity-0">
         <i id="toast-icon" class="fa-solid text-xl"></i>
-        <span id="toast-text" class="text-sm font-medium"></span>
+        <span id="toast-text" class="text-sm font-semibold"></span>
     </div>
 
-    <!-- Header / Navbar -->
-    <header class="sticky top-0 z-40 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/80 px-4 py-3 sm:px-6">
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-zinc-950 border-b border-brand-border px-4 py-4 sm:px-6">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
+            
             <!-- Brand Logo -->
-            <div class="flex items-center gap-3">
-                <div class="bg-gradient-to-tr from-brand-600 to-brand-400 p-2 rounded-xl text-zinc-950 font-black flex items-center justify-center shadow-lg shadow-brand-500/20">
-                    <i class="fa-solid fa-ranking-star text-lg"></i>
+            <div class="flex items-center gap-2">
+                <div class="bg-brand-orange p-2.5 rounded-lg text-white font-black flex items-center justify-center shadow-orangeBtn animate-pulse">
+                    <i class="fa-solid fa-fire-flame-simple text-xl"></i>
                 </div>
                 <div>
-                    <span class="text-xl font-extrabold tracking-wider text-white">Scout<span class="text-brand-500">.Net</span></span>
-                    <span class="hidden sm:inline-block ml-2 text-xs bg-brand-500/10 text-brand-400 border border-brand-500/20 px-2 py-0.5 rounded-full font-semibold">Prototipo Beta</span>
+                    <span class="text-2xl font-display font-extrabold tracking-tight text-white">Scout<span class="text-brand-orange">.Net</span></span>
+                    <span class="block text-[9px] text-zinc-400 font-medium uppercase tracking-widest">Conexión Directa de Talentos</span>
                 </div>
             </div>
 
-            <!-- Role Quick Toggle -->
-            <div class="flex items-center bg-zinc-900 border border-zinc-800 rounded-xl p-1 text-xs">
-                <button onclick="toggleRole('scout')" id="role-btn-scout" class="px-3 py-1.5 rounded-lg font-semibold transition-all duration-200 bg-brand-500 text-zinc-950 shadow">
-                    <i class="fa-solid fa-building-shield mr-1"></i> Club / Cazatalentos
+            <!-- Prominent Role Switcher (Top Right) -->
+            <div class="flex items-center bg-brand-surface border border-brand-border p-1 rounded-xl">
+                <button onclick="toggleRole('scout')" id="role-btn-scout" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 bg-brand-orange text-white shadow-orangeBtn">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Cazatalentos / Club</span>
                 </button>
-                <button onclick="toggleRole('athlete')" id="role-btn-athlete" class="px-3 py-1.5 rounded-lg font-semibold transition-all duration-200 text-zinc-400 hover:text-zinc-200">
-                    <i class="fa-solid fa-running mr-1"></i> Soy Deportista
+                <button onclick="toggleRole('athlete')" id="role-btn-athlete" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-zinc-400 hover:text-white">
+                    <i class="fa-solid fa-running"></i>
+                    <span>Soy Deportista</span>
                 </button>
             </div>
+
         </div>
     </header>
 
-    <!-- App Container -->
-    <div class="flex-1 max-w-7xl w-full mx-auto flex flex-col md:flex-row gap-6 p-4 sm:p-6 mb-16 md:mb-0">
+    <!-- Central Workspace -->
+    <div class="flex-1 max-w-7xl w-full mx-auto flex flex-col md:flex-row gap-6 p-4 sm:p-6 mb-12">
         
-        <!-- Navigation Menu Sidebar (Responsive) -->
-        <aside class="md:w-64 flex flex-col gap-2">
-            <!-- Navigation links -->
-            <nav class="flex flex-row md:flex-col overflow-x-auto md:overflow-visible bg-zinc-900/40 border border-zinc-800/50 p-2 rounded-2xl gap-1 scrollbar-none">
-                <button onclick="switchTab('discover')" id="tab-btn-discover" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap bg-brand-500/10 text-brand-400 border border-brand-500/20 shadow-neonGlow">
-                    <i class="fa-solid fa-magnifying-glass text-lg"></i> <span class="hidden md:inline">Descubrir Talentos</span>
+        <!-- Simplified Sidebar Navigation (Very clean, no clutter) -->
+        <aside class="md:w-64 flex flex-col gap-4">
+            
+            <!-- User Status Card -->
+            <div class="bg-brand-surface border border-brand-border rounded-2xl p-4 flex items-center gap-3">
+                <div id="side-user-icon" class="w-12 h-12 rounded-xl bg-brand-orange/10 border border-brand-orange/30 text-brand-orange flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-shield-cat"></i>
+                </div>
+                <div class="overflow-hidden">
+                    <h4 class="text-xs text-zinc-400 uppercase font-semibold tracking-wider">Sesión Activa</h4>
+                    <p id="side-user-name" class="text-sm font-bold text-white truncate leading-tight">C.A. Excursionistas</p>
+                    <span id="side-user-sub" class="text-[10px] text-brand-orange font-bold">Cazatalentos</span>
+                </div>
+            </div>
+
+            <!-- Tab Buttons -->
+            <nav class="flex flex-row md:flex-col bg-brand-surface border border-brand-border p-1.5 rounded-2xl gap-1">
+                <button onclick="switchTab('discover')" id="tab-btn-discover" class="flex-1 md:flex-initial flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all duration-150 bg-brand-orange text-white shadow-orangeGlow">
+                    <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    <span>Descubrir Talentos</span>
                 </button>
-                <button onclick="switchTab('ai-scout')" id="tab-btn-ai-scout" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200">
-                    <i class="fa-solid fa-wand-magic-sparkles text-lg text-amber-400"></i> <span class="hidden md:inline">Scouty AI Recruiter</span>
-                </button>
-                <button onclick="switchTab('profile')" id="tab-btn-profile" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200">
-                    <i class="fa-solid fa-id-card text-lg"></i> <span class="hidden md:inline">Mi Perfil / Panel</span>
-                </button>
-                <button onclick="switchTab('messages')" id="tab-btn-messages" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200 relative">
-                    <i class="fa-solid fa-message text-lg"></i> <span class="hidden md:inline">Mensajes</span>
-                    <span id="msg-badge" class="absolute top-2 right-2 bg-rose-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">2</span>
-                </button>
-                <button onclick="switchTab('pitch')" id="tab-btn-pitch" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200">
-                    <i class="fa-solid fa-lightbulb text-lg text-brand-neon"></i> <span class="hidden md:inline">El Pitch (Historia)</span>
+                <button onclick="switchTab('ai-scout')" id="tab-btn-ai-scout" class="flex-1 md:flex-initial flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all duration-150 text-zinc-400 hover:text-white hover:bg-brand-surfaceCard">
+                    <i class="fa-solid fa-robot text-sm"></i>
+                    <span>Scouty AI Assistant</span>
                 </button>
             </nav>
 
-            <!-- Scout Quick Summary Box (only visible under Scout Role) -->
-            <div id="scout-side-panel" class="hidden md:block bg-gradient-to-b from-zinc-900 to-zinc-950 border border-zinc-800 rounded-2xl p-4 mt-4">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center text-brand-500 font-bold border border-brand-500/20">
-                        <i class="fa-solid fa-shield-cat text-lg"></i>
+            <!-- Quick Metrics / Quick Information box inside Sidebar -->
+            <div id="sidebar-stats-box" class="bg-brand-surface border border-brand-border rounded-2xl p-4 space-y-3">
+                <h4 class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Resumen del Panel</h4>
+                
+                <!-- Scout Stats -->
+                <div id="scout-side-stats" class="space-y-2 text-xs">
+                    <div class="flex justify-between py-1 border-b border-brand-border">
+                        <span class="text-zinc-400">Guardados:</span>
+                        <span id="saved-badge-count" class="font-bold text-white">0 Atletas</span>
                     </div>
-                    <div>
-                        <h4 class="text-xs text-zinc-400">Club Activo</h4>
-                        <p class="text-sm font-bold text-white leading-tight">C.A. Excursionistas</p>
+                    <div class="flex justify-between py-1 border-b border-brand-border">
+                        <span class="text-zinc-400">Filtro principal:</span>
+                        <span class="font-bold text-brand-orange">CABA / Futsal</span>
                     </div>
                 </div>
-                <div class="space-y-2 text-xs">
-                    <div class="flex justify-between py-1 border-b border-zinc-800">
-                        <span class="text-zinc-400">Carpeta de Guardados:</span>
-                        <span id="saved-count" class="font-bold text-white">0 Atletas</span>
+
+                <!-- Athlete Stats (hidden by default) -->
+                <div id="athlete-side-stats" class="hidden space-y-2 text-xs">
+                    <div class="flex justify-between py-1 border-b border-brand-border">
+                        <span class="text-zinc-400">Visitas al Perfil:</span>
+                        <span class="font-bold text-brand-orange">142</span>
                     </div>
-                    <div class="flex justify-between py-1">
-                        <span class="text-zinc-400">Filtros Activos:</span>
-                        <span class="font-bold text-brand-400">Fútbol CABA</span>
+                    <div class="flex justify-between py-1 border-b border-brand-border">
+                        <span class="text-zinc-400">Completitud:</span>
+                        <span class="font-bold text-green-400">95%</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Athlete Quick Summary Box (only visible under Athlete Role) -->
-            <div id="athlete-side-panel" class="hidden md:block bg-gradient-to-b from-zinc-900 to-zinc-950 border border-zinc-800 rounded-2xl p-4 mt-4">
-                <div class="flex items-center gap-3 mb-3">
-                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=200&h=200" alt="Avatar" class="w-10 h-10 rounded-full object-cover border-2 border-brand-500 shadow-neonGlow">
-                    <div>
-                        <h4 class="text-xs text-zinc-400">Atleta Registrado</h4>
-                        <p class="text-sm font-bold text-white leading-tight">Alex Winik</p>
-                    </div>
-                </div>
-                <div class="space-y-2 text-xs">
-                    <div class="flex justify-between py-1 border-b border-zinc-800">
-                        <span class="text-zinc-400">Visitas al perfil (Mes):</span>
-                        <span class="font-bold text-brand-neon">142 views</span>
-                    </div>
-                    <div class="flex justify-between py-1">
-                        <span class="text-zinc-400">Completitud del perfil:</span>
-                        <span class="font-bold text-yellow-400">90%</span>
-                    </div>
-                </div>
-            </div>
         </aside>
 
-        <!-- Main Panel Content -->
-        <main class="flex-1 bg-zinc-900/20 border border-zinc-800/40 rounded-3xl p-4 sm:p-6 overflow-y-auto">
+        <!-- Main Dashboard Viewport -->
+        <main class="flex-1 bg-brand-surface border border-brand-border rounded-3xl p-4 sm:p-6 overflow-hidden flex flex-col justify-between">
             
-            <!-- VIEW 1: DISCOVER TALENT -->
-            <section id="view-discover" class="space-y-6">
-                <!-- Header of the Tab -->
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-zinc-800/80 pb-5">
+            <!-- VIEW 1: DIRECTORY / DISCOVER (With neat Double-Column Dashboard style) -->
+            <section id="view-discover" class="space-y-6 flex-1 flex flex-col">
+                
+                <!-- Header block -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-brand-border">
                     <div>
-                        <h2 class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
-                            <i class="fa-solid fa-radar text-brand-500"></i> Descubrir Nuevos Talentos
+                        <h2 id="discover-title" class="text-xl font-display font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-brand-orange"></i> Buscador de Talentos
                         </h2>
-                        <p class="text-sm text-zinc-400">Encontrá el jugador ideal filtrando estadísticas de forma transparente.</p>
+                        <p id="discover-desc" class="text-xs text-zinc-400">Filtrá estadísticas auditadas y contactá directamente a las promesas deportivas.</p>
                     </div>
-                    <div class="flex gap-2 w-full sm:w-auto">
-                        <div class="relative flex-1 sm:flex-initial">
-                            <input oninput="handleSearch(this.value)" type="text" placeholder="Buscar arquero, delantero, CABA..." class="w-full sm:w-64 bg-zinc-950 border border-zinc-800 rounded-xl py-2 pl-9 pr-4 text-sm text-white focus:outline-none focus:border-brand-500 transition">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-zinc-500 text-sm"></i>
-                        </div>
+                    
+                    <!-- Search input -->
+                    <div id="search-box-container" class="relative w-full sm:w-64">
+                        <input oninput="handleSearch(this.value)" type="text" placeholder="Buscar arquero, Belgrano, club..." class="w-full bg-brand-surfaceCard border border-brand-border rounded-xl py-2 pl-9 pr-4 text-xs text-white focus:outline-none focus:border-brand-orange transition">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-zinc-500 text-xs"></i>
                     </div>
                 </div>
 
-                <!-- Interactive Filters Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 bg-zinc-900/50 p-4 rounded-2xl border border-zinc-800/80">
+                <!-- Filters -->
+                <div id="discover-filters" class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-brand-surfaceCard p-3 rounded-2xl border border-brand-border">
                     <div>
-                        <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">Deporte</label>
-                        <select onchange="applyFilter('sport', this.value)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-500">
-                            <option value="Todos">Todos los deportes</option>
-                            <option value="Fútbol">Fútbol 11</option>
+                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Deporte</label>
+                        <select onchange="applyFilter('sport', this.value)" id="select-sport" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-orange">
+                            <option value="Todos">Todos</option>
+                            <option value="Fútbol 11">Fútbol 11</option>
                             <option value="Futsal">Futsal</option>
                             <option value="Tenis">Tenis</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">Posición</label>
-                        <select onchange="applyFilter('position', this.value)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-500">
-                            <option value="Todos">Todas las posiciones</option>
+                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Posición</label>
+                        <select onchange="applyFilter('position', this.value)" id="select-position" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-orange">
+                            <option value="Todos">Todas</option>
                             <option value="Arquero">Arquero</option>
                             <option value="Delantero">Delantero</option>
                             <option value="Mediocampista">Mediocampista</option>
-                            <option value="Defensor">Defensor</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1.5">Zona / Barrio</label>
-                        <select onchange="applyFilter('region', this.value)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-500">
-                            <option value="Todos">Todos (Nacional)</option>
+                        <label class="block text-[10px] font-bold text-zinc-400 uppercase tracking-wider mb-1">Zona</label>
+                        <select onchange="applyFilter('region', this.value)" id="select-region" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2 text-xs text-white focus:outline-none focus:border-brand-orange">
+                            <option value="Todos">Todos</option>
                             <option value="CABA">Capital Federal (CABA)</option>
-                            <option value="GBA">Gran Buenos Aires</option>
+                            <option value="Urquiza">Villa Urquiza</option>
+                            <option value="Belgrano">Belgrano</option>
                         </select>
                     </div>
-                    <div class="col-span-2 sm:col-span-1 flex items-end justify-end">
-                        <button onclick="resetFilters()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs py-2 px-4 rounded-lg transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-arrow-rotate-left"></i> Limpiar Filtros
+                    <div class="col-span-2 md:col-span-1 flex items-end">
+                        <button onclick="resetFilters()" class="w-full bg-brand-surface hover:bg-zinc-800 text-zinc-300 font-bold text-xs py-2 px-3 rounded-lg border border-brand-border transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Restablecer
                         </button>
                     </div>
                 </div>
 
-                <!-- Talent Cards Grid -->
-                <div id="athletes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <!-- Athlete cards dynamically injected here -->
-                </div>
-            </section>
-
-            <!-- VIEW 2: ATHLETE DASHBOARD & PROFILE -->
-            <section id="view-profile" class="hidden space-y-6">
-                <div class="border-b border-zinc-800/80 pb-5">
-                    <h2 class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-brand-500"></i> Mi Panel Deportivo
-                    </h2>
-                    <p class="text-sm text-zinc-400">Cargá tus estadísticas y visualizá cómo interactúan los clubes con tu perfil.</p>
-                </div>
-
-                <!-- Stats Overview Cards -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-zinc-400 block font-semibold">Visualizaciones de Perfil</span>
-                            <span class="text-3xl font-extrabold text-white">142</span>
-                            <span class="text-xs text-brand-neon block mt-1"><i class="fa-solid fa-arrow-trend-up"></i> +24% esta semana</span>
-                        </div>
-                        <div class="bg-brand-500/10 p-4 rounded-xl text-brand-400">
-                            <i class="fa-solid fa-chart-bar text-2xl"></i>
-                        </div>
-                    </div>
-                    <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-zinc-400 block font-semibold">Clubes Interesados</span>
-                            <span class="text-3xl font-extrabold text-white">4</span>
-                            <span class="text-xs text-zinc-400 block mt-1">Excursionistas, River, Pinocho +1</span>
-                        </div>
-                        <div class="bg-blue-500/10 p-4 rounded-xl text-blue-400">
-                            <i class="fa-solid fa-handshake text-2xl"></i>
-                        </div>
-                    </div>
-                    <div class="bg-zinc-900/60 p-5 rounded-2xl border border-zinc-800 flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-zinc-400 block font-semibold">Métricas de Rendimiento</span>
-                            <span class="text-3xl font-extrabold text-white">90%</span>
-                            <span class="text-xs text-amber-400 block mt-1"><i class="fa-solid fa-star"></i> Perfil Muy Atractivo</span>
-                        </div>
-                        <div class="bg-amber-500/10 p-4 rounded-xl text-amber-400">
-                            <i class="fa-solid fa-bolt text-2xl"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Athlete Profile Editor & Video highlights -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Left: Avatar, cover and core details editor -->
-                    <div class="lg:col-span-2 bg-zinc-900/40 border border-zinc-800 rounded-3xl p-6 space-y-6">
-                        <h3 class="text-lg font-bold text-white border-b border-zinc-800 pb-3">Editar Mis Datos Públicos</h3>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-zinc-400 mb-2">Nombre Completo</label>
-                                <input type="text" id="edit-name" value="Alex Winik" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-zinc-400 mb-2">Deporte</label>
-                                <input type="text" id="edit-sport" value="Fútbol (Futsal / 11)" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-zinc-400 mb-2">Posición Primaria</label>
-                                <input type="text" id="edit-position" value="Arquero" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-zinc-400 mb-2">Club Actual / Estado</label>
-                                <input type="text" id="edit-club" value="Pinocho (Futsal) / Libre" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-zinc-400 mb-2">Ubicación</label>
-                                <input type="text" id="edit-location" value="Villa Urquiza, CABA" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-zinc-400 mb-2">Link a Video de Highlights (YouTube)</label>
-                                <input type="text" id="edit-video" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ" placeholder="https://youtube.com/watch?..." class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500">
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-semibold text-zinc-400 mb-2">Carta de Presentación / Bio</label>
-                            <textarea id="edit-bio" rows="3" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand-500">Arquero con gran porte físico, líder bajo los tres palos. Formado en Pinocho. Busco dar el salto al fútbol 11 profesional. Comprometido 100% con los entrenamientos diarios.</textarea>
-                        </div>
-
-                        <div class="flex justify-end gap-3">
-                            <button onclick="saveAthleteProfile()" class="bg-brand-500 hover:bg-brand-600 text-zinc-950 font-bold px-6 py-2.5 rounded-xl transition">
-                                Guardar Perfil
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Right: Quick Stat sliders & Video mock preview -->
-                    <div class="bg-zinc-900/40 border border-zinc-800 rounded-3xl p-6 space-y-6 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-white border-b border-zinc-800 pb-3 mb-4">Autoevaluación de Atributos</h3>
-                            <p class="text-xs text-zinc-400 mb-5">Ajustá las métricas reales que verán los reclutadores en tu ficha de talento.</p>
-                            
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex justify-between text-xs font-bold text-zinc-300 mb-1">
-                                        <span>Reflejos</span>
-                                        <span id="label-stat-1" class="text-brand-neon">92</span>
-                                    </div>
-                                    <input oninput="updateSliderLabel('stat-1', this.value)" type="range" id="input-stat-1" min="50" max="99" value="92" class="w-full accent-brand-500 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs font-bold text-zinc-300 mb-1">
-                                        <span>Mano a Mano</span>
-                                        <span id="label-stat-2" class="text-brand-neon">89</span>
-                                    </div>
-                                    <input oninput="updateSliderLabel('stat-2', this.value)" type="range" id="input-stat-2" min="50" max="99" value="89" class="w-full accent-brand-500 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs font-bold text-zinc-300 mb-1">
-                                        <span>Juego Aéreo</span>
-                                        <span id="label-stat-3" class="text-brand-neon">85</span>
-                                    </div>
-                                    <input oninput="updateSliderLabel('stat-3', this.value)" type="range" id="input-stat-3" min="50" max="99" value="85" class="w-full accent-brand-500 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs font-bold text-zinc-300 mb-1">
-                                        <span>Juego con los Pies</span>
-                                        <span id="label-stat-4" class="text-brand-neon">78</span>
-                                    </div>
-                                    <input oninput="updateSliderLabel('stat-4', this.value)" type="range" id="input-stat-4" min="50" max="99" value="78" class="w-full accent-brand-500 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Highlights Quick Player Simulator -->
-                        <div class="bg-zinc-950 p-4 rounded-2xl border border-zinc-800 text-center space-y-3 mt-4">
-                            <span class="text-xs text-brand-400 uppercase font-extrabold tracking-wider block">Video de Demostración</span>
-                            <div class="aspect-video bg-zinc-900 border border-zinc-800/80 rounded-xl flex flex-col items-center justify-center gap-2 relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1510563800743-aed2364902b9?auto=format&fit=crop&q=80&w=400" alt="Video cover" class="absolute inset-0 object-cover opacity-30 w-full h-full">
-                                <i class="fa-regular fa-circle-play text-4xl text-brand-neon relative z-10 animate-pulse"></i>
-                                <span class="text-xs text-zinc-300 relative z-10 font-medium">Ver Highlights de Alex Winik</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW 3: AI RECRUITER (SCOUTY) -->
-            <section id="view-ai-scout" class="hidden space-y-6">
-                <div class="border-b border-zinc-800/80 pb-5">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-zinc-950 text-xl font-bold">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
-                                Scouty AI Recruiter
-                            </h2>
-                            <p class="text-sm text-zinc-400">Inteligencia Artificial para encontrar al jugador perfecto o potenciar tu carrera deportiva.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chat layout wrapper -->
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[550px]">
+                <!-- Double Column Workspace -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 items-start">
                     
-                    <!-- Left suggestions sidebar -->
-                    <div class="lg:col-span-1 bg-zinc-900/40 border border-zinc-800 rounded-3xl p-5 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-4">Consultas Sugeridas</h3>
-                            <div class="space-y-2.5">
-                                <button onclick="sendSuggestion('¿Quién es el arquero con mejores reflejos en la base de datos?')" class="w-full text-left bg-zinc-950 hover:bg-zinc-900 border border-zinc-800/80 hover:border-amber-400 p-3 rounded-xl text-xs text-zinc-300 transition duration-200">
-                                    "¿Quién es el arquero con mejores reflejos?"
-                                </button>
-                                <button onclick="sendSuggestion('Necesito un extremo izquierdo de 19 años o menos con gran velocidad')" class="w-full text-left bg-zinc-950 hover:bg-zinc-900 border border-zinc-800/80 hover:border-amber-400 p-3 rounded-xl text-xs text-zinc-300 transition duration-200">
-                                    "Necesito un extremo izquierdo veloz de 19 años"
-                                </button>
-                                <button onclick="sendSuggestion('Soy Alex Winik, arquero de Pinocho. ¿Cómo puedo mejorar mis estadísticas para que me vea Excursionistas?')" class="w-full text-left bg-zinc-950 hover:bg-zinc-900 border border-zinc-800/80 hover:border-amber-400 p-3 rounded-xl text-xs text-zinc-300 transition duration-200">
-                                    "Soy Alex, ¿cómo puedo mejorar mis stats?"
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="bg-amber-500/10 p-4 rounded-2xl border border-amber-500/20 text-center">
-                            <i class="fa-solid fa-robot text-amber-400 text-lg mb-1"></i>
-                            <p class="text-[11px] text-zinc-300">Potenciado por Gemini 3 Flash. Respuestas rápidas de rendimiento deportivo y scouting.</p>
+                    <!-- Left: Athletes List (65%) -->
+                    <div class="lg:col-span-2 space-y-4 max-h-[500px] overflow-y-auto pr-1">
+                        <div id="athletes-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Injected dynamically -->
                         </div>
                     </div>
 
-                    <!-- Chat conversation core -->
-                    <div class="lg:col-span-3 bg-zinc-900/40 border border-zinc-800 rounded-3xl flex flex-col justify-between overflow-hidden">
-                        <!-- Chat history container -->
-                        <div id="ai-chat-history" class="flex-1 p-5 overflow-y-auto space-y-4 text-sm scrollbar-none">
-                            <div class="flex gap-3 max-w-[85%]">
-                                <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-zinc-950 shrink-0 font-bold">
-                                    S
-                                </div>
-                                <div class="bg-zinc-900 p-4 rounded-2xl border border-zinc-800/80 text-zinc-100">
-                                    ¡Hola! Soy <strong>Scouty</strong>, tu asistente de reclutamiento de Scout.Net. ⚽<br><br>
-                                    Puedo ayudarte a filtrar jugadores de nuestra base de datos (como buscar velocistas, arqueros con buenos reflejos) o darte consejos de carrera. ¿Qué estás buscando hoy?
-                                </div>
-                            </div>
+                    <!-- Right: Quick Activity Drawer & Messages Hub (35%) -->
+                    <div class="bg-brand-surfaceCard border border-brand-border rounded-3xl p-4 space-y-4">
+                        
+                        <!-- Mini chat simulator inside the Dashboard -->
+                        <div class="border-b border-brand-border pb-3">
+                            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-comments text-brand-orange"></i> Mensajería Rápida
+                            </h3>
+                            <p class="text-[10px] text-zinc-400">Contacto instantáneo entre clubes y atletas sin intermediarios.</p>
                         </div>
 
-                        <!-- Chat input field -->
-                        <div class="p-4 border-t border-zinc-800 bg-zinc-950 flex items-center gap-3">
-                            <input onkeydown="if(event.key === 'Enter') handleAISubmit()" type="text" id="ai-chat-input" placeholder="Preguntale a Scouty por talentos..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-amber-400 transition">
-                            <button onclick="handleAISubmit()" class="bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold p-3.5 rounded-xl transition flex items-center justify-center">
-                                <i class="fa-solid fa-paper-plane text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- VIEW 4: MESSAGES & CONTACT -->
-            <section id="view-messages" class="hidden space-y-6">
-                <div class="border-b border-zinc-800/80 pb-5">
-                    <h2 class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
-                        <i class="fa-solid fa-envelope text-brand-500"></i> Mensajería Directa
-                    </h2>
-                    <p class="text-sm text-zinc-400">Canal directo entre cazatalentos de clubes y atletas. Sin intermediarios.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[500px]">
-                    <!-- Inbox Sidebar list -->
-                    <div class="bg-zinc-900/40 border border-zinc-800 rounded-3xl p-4 overflow-y-auto space-y-2">
-                        <div onclick="selectInboxChat(1)" class="p-3 bg-zinc-900 border border-brand-500/40 rounded-2xl flex items-center gap-3 cursor-pointer hover:border-brand-500 transition">
-                            <div class="w-10 h-10 rounded-xl bg-rose-900/30 border border-rose-500/50 flex items-center justify-center text-rose-500 font-extrabold">
-                                EX
-                            </div>
-                            <div class="flex-1 overflow-hidden">
-                                <div class="flex justify-between items-baseline">
-                                    <h4 class="text-xs font-bold text-white truncate">Excursionistas (Coordinador)</h4>
-                                    <span class="text-[10px] text-zinc-500">10:42</span>
-                                </div>
-                                <p class="text-xs text-brand-400 truncate mt-0.5">Hola Juan, nos interesó el perfil de Alex...</p>
-                            </div>
-                        </div>
-                        <div onclick="selectInboxChat(2)" class="p-3 bg-zinc-950/40 border border-zinc-850 rounded-2xl flex items-center gap-3 cursor-pointer hover:bg-zinc-900/50 transition">
-                            <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-300 font-extrabold">
-                                PI
-                            </div>
-                            <div class="flex-1 overflow-hidden">
-                                <div class="flex justify-between items-baseline">
-                                    <h4 class="text-xs font-bold text-zinc-400 truncate">Pinocho Futsal (DT)</h4>
-                                    <span class="text-[10px] text-zinc-500">Ayer</span>
-                                </div>
-                                <p class="text-xs text-zinc-500 truncate mt-0.5">Excelente rendimiento en el último partido...</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chat Container -->
-                    <div class="md:col-span-2 bg-zinc-900/40 border border-zinc-800 rounded-3xl flex flex-col justify-between overflow-hidden">
-                        <!-- Active recipient top bar -->
-                        <div class="p-4 bg-zinc-950 border-b border-zinc-800 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg bg-rose-900/30 border border-rose-500/50 flex items-center justify-center text-rose-500 font-bold text-xs">
-                                EX
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-bold text-white leading-tight">Coordinación Juvenil - C.A. Excursionistas</h3>
-                                <p class="text-[10px] text-brand-400"><i class="fa-solid fa-circle text-[6px] animate-pulse mr-1"></i> En línea</p>
-                            </div>
+                        <!-- Chat Messages History Panel -->
+                        <div id="dashboard-chat-box" class="h-44 overflow-y-auto space-y-3 p-2 bg-brand-surface rounded-xl border border-brand-border text-xs">
+                            <!-- Injected dynamically -->
                         </div>
 
-                        <!-- Active conversation messages -->
-                        <div id="messages-box-history" class="flex-1 p-5 overflow-y-auto space-y-4 text-xs">
-                            <!-- Populated dynamically -->
-                        </div>
-
-                        <!-- Chat message field -->
-                        <div class="p-4 border-t border-zinc-800 bg-zinc-950 flex items-center gap-2">
-                            <input onkeydown="if(event.key === 'Enter') sendDirectMessage()" type="text" id="direct-msg-input" placeholder="Escribir mensaje..." class="flex-1 bg-zinc-900 border border-zinc-800 rounded-xl py-3 px-4 text-xs text-white focus:outline-none focus:border-brand-500 transition">
-                            <button onclick="sendDirectMessage()" class="bg-brand-500 hover:bg-brand-600 text-zinc-950 font-bold px-4 py-3 rounded-xl transition flex items-center justify-center">
+                        <!-- Chat input -->
+                        <div class="flex gap-2">
+                            <input onkeydown="if(event.key === 'Enter') sendDashboardChatMessage()" id="dashboard-chat-input" type="text" placeholder="Escribir mensaje..." class="flex-1 bg-brand-surface border border-brand-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-orange">
+                            <button onclick="sendDashboardChatMessage()" class="bg-brand-orange hover:bg-brand-orangeHover text-white px-3 py-2 rounded-xl text-xs font-bold transition">
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
+
                     </div>
+
                 </div>
+
             </section>
 
-            <!-- VIEW 5: THE PITCH / HISTORY -->
-            <section id="view-pitch" class="hidden space-y-8">
-                <div class="border-b border-zinc-800/80 pb-5">
-                    <h2 class="text-2xl font-extrabold tracking-tight text-white flex items-center gap-2">
-                        <i class="fa-solid fa-lightbulb text-brand-neon"></i> Scout.Net: El Sueño Detrás de la Idea
+            <!-- VIEW 2: ATHLETE PROFILE MANAGER & METRIC ADJUSTER (Visible in 'athlete' role) -->
+            <section id="view-athlete-panel" class="hidden space-y-6 flex-1 flex flex-col">
+                
+                <div class="border-b border-brand-border pb-4">
+                    <h2 class="text-xl font-display font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-id-card text-brand-orange"></i> Mi Perfil y Métricas
                     </h2>
-                    <p class="text-sm text-zinc-400">Por qué nació este proyecto, a quién ayuda y los números que lo avalan.</p>
+                    <p class="text-xs text-zinc-400">Editá tus estadísticas, subí tus jugadas y observá el interés de los reclutadores.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Text and Pitch Info -->
-                    <div class="space-y-6">
-                        <div class="bg-zinc-900/50 p-6 rounded-3xl border border-zinc-800 space-y-4">
-                            <span class="text-xs text-brand-neon uppercase font-extrabold tracking-widest block"><i class="fa-solid fa-heart"></i> Una historia real</span>
-                            <h3 class="text-xl font-bold text-white">"No sé cómo hacer para que me vean"</h3>
-                            <p class="text-zinc-300 text-sm leading-relaxed">
-                                El proyecto nace de una experiencia personal muy cercana. <strong>Alex</strong>, amigo desde el jardín, arrancó atajando en <strong>Pinocho</strong>. El año pasado se probó en <strong>Excursionistas</strong> y quedó entrenando. Estuvo más de medio año madrugando, saliendo temprano de la escuela para llegar a tiempo, dando el 100%.
-                            </p>
-                            <p class="text-zinc-300 text-sm leading-relaxed">
-                                Sin embargo, no lo habían fichado. Entrenaba sin contrato y no lo ponían porque nunca se firmó nada. Nadie le hablaba a la familia ni a él de forma transparente. Fue un baldazo de agua fría. Esto pasa todos los días con cientos de chicos que sueñan con crecer y chocan con la misma pared: <strong>no tener el contacto adecuado</strong>.
-                            </p>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 items-start">
+                    
+                    <!-- Left & Middle: Core Profile Editor -->
+                    <div class="lg:col-span-2 bg-brand-surfaceCard border border-brand-border rounded-3xl p-5 space-y-4">
+                        <h3 class="text-xs font-bold text-white uppercase tracking-widest border-b border-brand-border pb-2">Información del Deportista</h3>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Nombre Completo</label>
+                                <input type="text" id="edit-name" value="Alex Winik" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Deporte</label>
+                                <input type="text" id="edit-sport" value="Fútbol Futsal" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Posición Primaria</label>
+                                <input type="text" id="edit-position" value="Arquero" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Club Actual / Estado</label>
+                                <input type="text" id="edit-club" value="Pinocho (Futsal) / Libre" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Ubicación / Barrio</label>
+                                <input type="text" id="edit-location" value="Villa Urquiza, CABA" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-orange">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Video YouTube ID de Jugadas</label>
+                                <input type="text" id="edit-youtube" value="jd8IPGf4dKM" placeholder="Ej: jd8IPGf4dKM" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2.5 text-white focus:outline-none focus:border-brand-orange">
+                            </div>
                         </div>
 
-                        <div class="bg-zinc-900/30 p-6 rounded-3xl border border-zinc-800 space-y-3">
-                            <span class="text-xs text-amber-400 uppercase font-extrabold tracking-widest block"><i class="fa-solid fa-chart-pie"></i> Validación del Mercado</span>
-                            <h3 class="text-lg font-bold text-white">¿Qué busca la gente en Capital Federal?</h3>
-                            <p class="text-zinc-300 text-sm">
-                                Entre 2022 y 2025, el <strong>47%</strong> de las búsquedas deportivas más potentes en Google dentro de CABA correspondieron a términos de conexión:
-                            </p>
-                            <div class="grid grid-cols-3 gap-2 text-center text-xs pt-2">
-                                <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-850">
-                                    <span class="text-lg font-bold text-brand-500 block">#1</span>
-                                    <span class="text-zinc-400">Clubes de fútbol [barrio]</span>
-                                </div>
-                                <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-850">
-                                    <span class="text-lg font-bold text-brand-500 block">#2</span>
-                                    <span class="text-zinc-400">Escuela de tenis cerca</span>
-                                </div>
-                                <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-850">
-                                    <span class="text-lg font-bold text-brand-500 block">#3</span>
-                                    <span class="text-zinc-400">Fútbol amateur CABA</span>
-                                </div>
-                            </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Biografía / Carta de Presentación</label>
+                            <textarea id="edit-bio" rows="2" class="w-full bg-brand-surface border border-brand-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-brand-orange">Arquero con gran porte físico, líder bajo los tres palos. Formado en Pinocho. Busco dar el salto al fútbol 11 profesional en CABA. Comprometido 100% con los entrenamientos diarios.</textarea>
+                        </div>
+
+                        <div class="flex justify-end pt-2">
+                            <button onclick="saveAthleteProfile()" class="bg-brand-orange hover:bg-brand-orangeHover text-white text-xs font-bold px-6 py-2.5 rounded-xl transition shadow-orangeBtn">
+                                <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar Cambios del Perfil
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Visual layout of Scout.Net ecosystem -->
-                    <div class="flex flex-col justify-between bg-gradient-to-br from-zinc-900/60 to-zinc-950 border border-zinc-800 p-8 rounded-3xl space-y-6">
-                        <div class="text-center space-y-2">
-                            <h3 class="text-xl font-black text-white">El Ecosistema Scout.Net</h3>
-                            <p class="text-xs text-zinc-400">La red que revoluciona las oportunidades en el deporte de jóvenes</p>
-                        </div>
+                    <!-- Right Column: Real-time Metric Sliders for Athlete -->
+                    <div class="bg-brand-surfaceCard border border-brand-border rounded-3xl p-5 space-y-4">
+                        <h3 class="text-xs font-bold text-white uppercase tracking-widest border-b border-brand-border pb-2">Habilidades Autoevaluadas</h3>
+                        <p class="text-[10px] text-zinc-400">Ajustá las métricas reales que verán los reclutadores en tu ficha de talento.</p>
 
-                        <div class="relative flex flex-col items-center justify-center gap-6 py-6">
-                            <!-- Flow diagram -->
-                            <div class="flex items-center gap-4 bg-zinc-950 p-4 rounded-2xl border border-zinc-850 w-full max-w-sm hover:border-brand-500 transition duration-300">
-                                <div class="w-12 h-12 bg-brand-500/10 text-brand-500 rounded-xl flex items-center justify-center text-xl shrink-0">
-                                    <i class="fa-solid fa-running"></i>
+                        <div class="space-y-3.5 text-xs">
+                            <div>
+                                <div class="flex justify-between font-bold text-zinc-300 mb-1">
+                                    <span>Reflejos</span>
+                                    <span id="label-stat-1" class="text-brand-orange">92</span>
                                 </div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-white">Deportista (15-35 años)</h4>
-                                    <p class="text-[11px] text-zinc-400">Carga videos, estadísticas validadas y crea su perfil gratuito.</p>
-                                </div>
+                                <input oninput="updateSliderLabel('stat-1', this.value)" type="range" id="input-stat-1" min="50" max="99" value="92" class="w-full accent-brand-orange h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
                             </div>
-
-                            <div class="h-8 w-0.5 bg-gradient-to-b from-brand-500 to-amber-500 animate-pulse"></div>
-
-                            <div class="flex items-center gap-4 bg-zinc-950 p-4 rounded-2xl border border-zinc-850 w-full max-w-sm hover:border-amber-400 transition duration-300">
-                                <div class="w-12 h-12 bg-amber-500/10 text-amber-500 rounded-xl flex items-center justify-center text-xl shrink-0">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <div>
+                                <div class="flex justify-between font-bold text-zinc-300 mb-1">
+                                    <span>Mano a Mano</span>
+                                    <span id="label-stat-2" class="text-brand-orange">89</span>
                                 </div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-white">Scout.Net Inteligente</h4>
-                                    <p class="text-[11px] text-zinc-400">Filtra con IA, une necesidades y conecta directamente sin intermediarios.</p>
-                                </div>
+                                <input oninput="updateSliderLabel('stat-2', this.value)" type="range" id="input-stat-2" min="50" max="99" value="89" class="w-full accent-brand-orange h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
                             </div>
-
-                            <div class="h-8 w-0.5 bg-gradient-to-b from-amber-500 to-blue-500 animate-pulse"></div>
-
-                            <div class="flex items-center gap-4 bg-zinc-950 p-4 rounded-2xl border border-zinc-850 w-full max-w-sm hover:border-blue-500 transition duration-300">
-                                <div class="w-12 h-12 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center text-xl shrink-0">
-                                    <i class="fa-solid fa-building-shield"></i>
+                            <div>
+                                <div class="flex justify-between font-bold text-zinc-300 mb-1">
+                                    <span>Juego Aéreo</span>
+                                    <span id="label-stat-3" class="text-brand-orange">85</span>
                                 </div>
-                                <div class="text-left">
-                                    <h4 class="text-sm font-bold text-white">Clubes y Academias</h4>
-                                    <p class="text-[11px] text-zinc-400">Cazatalentos que buscan compromiso real de forma rápida y eficaz.</p>
+                                <input oninput="updateSliderLabel('stat-3', this.value)" type="range" id="input-stat-3" min="50" max="99" value="85" class="w-full accent-brand-orange h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between font-bold text-zinc-300 mb-1">
+                                    <span>Pase / Saque</span>
+                                    <span id="label-stat-4" class="text-brand-orange">78</span>
                                 </div>
+                                <input oninput="updateSliderLabel('stat-4', this.value)" type="range" id="input-stat-4" min="50" max="99" value="78" class="w-full accent-brand-orange h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
                             </div>
                         </div>
 
-                        <div class="text-center">
-                            <span class="text-xs text-zinc-500">"El talento está ahí, las ganas están ahí... solo hay que conectarlos."</span>
+                        <!-- Active Athlete Live Highlights Player Embed -->
+                        <div class="bg-brand-surface p-3 rounded-xl border border-brand-border space-y-2 mt-4">
+                            <span class="text-[9px] text-brand-orange uppercase font-bold block"><i class="fa-brands fa-youtube mr-1"></i> Video Destacado</span>
+                            <div class="aspect-video w-full rounded-lg overflow-hidden border border-zinc-800 bg-zinc-950">
+                                <iframe id="athlete-panel-iframe" class="w-full h-full" src="https://www.youtube.com/embed/jd8IPGf4dKM" title="Highlights Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- VIEW 3: AI RECRUITER (SCOUTY CHAT) -->
+            <section id="view-ai-scout" class="hidden space-y-4 flex-1 flex flex-col">
+                
+                <div class="border-b border-brand-border pb-4 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-display font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-robot text-brand-orange"></i> Scouty AI Recruiter
+                        </h2>
+                        <p class="text-xs text-zinc-400">Inteligencia Artificial para encontrar al jugador perfecto o potenciar tu carrera deportiva en CABA.</p>
+                    </div>
+                    <span class="bg-brand-orange/10 text-brand-orange border border-brand-orange/20 px-2 py-1 rounded-full text-[10px] font-bold">Gemini Powered</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-1 items-stretch">
+                    
+                    <!-- Suggestions Panel (Left 25%) -->
+                    <div class="lg:col-span-1 bg-brand-surfaceCard border border-brand-border rounded-2xl p-4 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <h3 class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Preguntas Rápidas</h3>
+                            
+                            <button onclick="sendAISuggestion('¿Quién es el arquero con mejores reflejos en la base de datos?')" class="w-full text-left bg-brand-surface hover:bg-zinc-800 border border-brand-border hover:border-brand-orange p-2.5 rounded-xl text-[11px] text-zinc-300 transition duration-150">
+                                "Recomendame un arquero"
+                            </button>
+                            <button onclick="sendAISuggestion('Necesito un extremo de gran velocidad menor a 20 años en CABA')" class="w-full text-left bg-brand-surface hover:bg-zinc-800 border border-brand-border hover:border-brand-orange p-2.5 rounded-xl text-[11px] text-zinc-300 transition duration-150">
+                                "Extremo rápido de Palermo"
+                            </button>
+                            <button onclick="sendAISuggestion('Soy Alex Winik, arquero de Pinocho. ¿Cómo puedo mejorar mi perfil para que me vea Excursionistas?')" class="w-full text-left bg-brand-surface hover:bg-zinc-800 border border-brand-border hover:border-brand-orange p-2.5 rounded-xl text-[11px] text-zinc-300 transition duration-150">
+                                "Consejos de mejora de perfil"
+                            </button>
+                        </div>
+
+                        <div class="bg-brand-orange/5 p-3 rounded-xl border border-brand-orange/10 text-center mt-4">
+                            <p class="text-[9px] text-zinc-400 leading-relaxed">Scouty responde con conocimiento exhaustivo de la base de datos deportiva de la app.</p>
                         </div>
                     </div>
+
+                    <!-- Conversation Window (Right 75%) -->
+                    <div class="lg:col-span-3 bg-brand-surfaceCard border border-brand-border rounded-2xl flex flex-col justify-between overflow-hidden">
+                        
+                        <!-- Messages Body -->
+                        <div id="ai-chat-history" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+                            <div class="flex gap-2.5 max-w-[85%]">
+                                <div class="w-7 h-7 rounded-lg bg-brand-orange text-white flex items-center justify-center shrink-0 font-bold">
+                                    S
+                                </div>
+                                <div class="bg-brand-surface p-3 rounded-xl border border-brand-border text-zinc-200">
+                                    ¡Hola! Soy <strong>Scouty AI</strong>. ⚽<br>
+                                    ¿A quién estamos buscando hoy? Decime qué deporte, posición o zona te interesa y analizo las estadísticas auditadas de nuestros deportistas.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat input bar -->
+                        <div class="p-3 bg-zinc-950 border-t border-brand-border flex items-center gap-2">
+                            <input onkeydown="if(event.key === 'Enter') handleAISubmit()" type="text" id="ai-chat-input" placeholder="Preguntale a Scouty..." class="flex-1 bg-brand-surface border border-brand-border rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-brand-orange">
+                            <button onclick="handleAISubmit()" class="bg-brand-orange hover:bg-brand-orangeHover text-white p-2 px-4 rounded-lg text-xs font-bold transition">
+                                Enviar <i class="fa-solid fa-paper-plane ml-1"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
                 </div>
+
             </section>
 
         </main>
     </div>
 
-    <!-- Athlete Profile Detail Modal -->
-    <div id="athlete-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
-            <!-- Cover & Avatar -->
-            <div class="h-32 bg-zinc-850 relative">
-                <img id="modal-cover" src="https://images.unsplash.com/photo-1510563800743-aed2364902b9?auto=format&fit=crop&q=80&w=600" alt="Cover" class="w-full h-full object-cover opacity-40">
-                <button onclick="closeAthleteModal()" class="absolute top-4 right-4 bg-zinc-950/80 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-zinc-900 transition">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
+    <!-- Athlete Technical Modal Detail -->
+    <div id="athlete-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-brand-surface border border-brand-border rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
             
-            <div class="px-6 pb-6 relative flex-1 overflow-y-auto">
-                <!-- Avatar image overlay -->
-                <div class="absolute -top-10 left-6">
-                    <img id="modal-avatar" src="" alt="Avatar" class="w-20 h-20 rounded-2xl object-cover border-4 border-zinc-900 shadow-xl">
+            <!-- Modal Header / Video area -->
+            <div class="relative bg-zinc-950 flex flex-col">
+                <div class="flex justify-between items-center p-4 border-b border-brand-border bg-brand-surfaceCard">
+                    <span class="text-xs text-brand-orange font-bold uppercase tracking-widest"><i class="fa-solid fa-circle-play mr-1"></i> Demostración Técnica y Highlights</span>
+                    <button onclick="closeAthleteModal()" class="bg-zinc-900 text-white w-7 h-7 rounded-full flex items-center justify-center hover:bg-brand-orange transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
+                <!-- YouTube Embed Video Frame -->
+                <div class="aspect-video w-full bg-black">
+                    <iframe id="modal-youtube-iframe" class="w-full h-full" src="" title="Highlights Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
 
-                <!-- Profile Core Info -->
-                <div class="pt-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                        <h3 id="modal-name" class="text-2xl font-extrabold text-white">Alex Winik</h3>
-                        <p id="modal-sport" class="text-sm text-brand-400 font-medium">Fútbol (Futsal / 11)</p>
-                        <div class="flex items-center gap-2 text-xs text-zinc-400 mt-1">
-                            <i class="fa-solid fa-location-dot"></i> <span id="modal-location">Villa Urquiza, CABA</span>
-                            <span class="text-zinc-600">•</span>
-                            <span id="modal-club">Pinocho / Libre</span>
+            <div class="p-5 flex-1 overflow-y-auto space-y-4">
+                
+                <!-- Profile Base Data inside Modal -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="flex items-center gap-3">
+                        <img id="modal-avatar" src="" alt="Avatar" class="w-14 h-14 rounded-xl object-cover border border-brand-border" onerror="handleImageError(this, 'Atleta')">
+                        <div>
+                            <h3 id="modal-name" class="text-lg font-bold text-white">Alex Winik</h3>
+                            <p id="modal-sport-pos" class="text-xs text-brand-orange font-bold">Fútbol Futsal — Arquero</p>
+                            <div class="flex items-center gap-2 text-[10px] text-zinc-400 mt-0.5">
+                                <i class="fa-solid fa-location-dot"></i> <span id="modal-location">Villa Urquiza, CABA</span>
+                                <span class="text-zinc-600">•</span>
+                                <span id="modal-club" class="font-semibold text-white">Pinocho / Libre</span>
+                            </div>
                         </div>
                     </div>
                     <div class="flex gap-2 w-full sm:w-auto">
-                        <button onclick="triggerDirectContact()" class="flex-1 sm:flex-initial bg-brand-500 hover:bg-brand-600 text-zinc-950 font-bold px-4 py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-message"></i> Contactar
+                        <button onclick="triggerDirectContact()" class="flex-1 sm:flex-initial bg-brand-orange hover:bg-brand-orangeHover text-white font-bold px-4 py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-orangeBtn">
+                            <i class="fa-solid fa-envelope"></i> Contactar
                         </button>
-                        <button id="modal-save-btn" onclick="toggleSaveAthlete()" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold px-4 py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2">
+                        <button id="modal-save-btn" onclick="toggleSaveAthlete()" class="bg-brand-surfaceCard hover:bg-zinc-850 text-zinc-300 border border-brand-border font-bold px-4 py-2 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
                             <i class="fa-regular fa-bookmark"></i> Guardar
                         </button>
                     </div>
                 </div>
 
-                <!-- Stats and Attributes -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 border-t border-zinc-800/80 pt-6">
-                    <!-- Stats list -->
-                    <div class="space-y-4">
-                        <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Estadísticas de Atributos</h4>
-                        <div id="modal-stats-list" class="space-y-3">
+                <!-- Attributes & Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-brand-border pt-4">
+                    
+                    <!-- Stats Bars -->
+                    <div class="space-y-3">
+                        <h4 class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Estadísticas Auditadas</h4>
+                        <div id="modal-stats-list" class="space-y-2 text-xs">
                             <!-- Injected dynamically -->
                         </div>
                     </div>
 
-                    <!-- About / Bio -->
-                    <div class="space-y-4 flex flex-col justify-between">
+                    <!-- Bio, Height, Weight, foot Info -->
+                    <div class="space-y-3 flex flex-col justify-between">
                         <div>
-                            <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Acerca de mí</h4>
-                            <p id="modal-bio" class="text-xs text-zinc-300 leading-relaxed bg-zinc-950/50 p-4 rounded-xl border border-zinc-850">
-                                Sin biografía cargada por el deportista.
+                            <h4 class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1.5">Biografía</h4>
+                            <p id="modal-bio" class="text-xs text-zinc-300 leading-relaxed bg-brand-surfaceCard p-3 rounded-xl border border-brand-border">
+                                Sin descripción disponible.
                             </p>
                         </div>
 
-                        <!-- Technical Card details -->
-                        <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-850 grid grid-cols-3 gap-2 text-center text-xs mt-3">
+                        <!-- Mini Technical Grid -->
+                        <div class="bg-brand-surfaceCard p-3 rounded-xl border border-brand-border grid grid-cols-3 gap-1 text-center text-xs">
                             <div>
-                                <span class="text-zinc-500 block text-[10px] uppercase">Altura</span>
+                                <span class="text-[9px] text-zinc-500 uppercase block">Altura</span>
                                 <span id="modal-height" class="font-bold text-white">-</span>
                             </div>
                             <div>
-                                <span class="text-zinc-500 block text-[10px] uppercase">Peso</span>
+                                <span class="text-[9px] text-zinc-500 uppercase block">Peso</span>
                                 <span id="modal-weight" class="font-bold text-white">-</span>
                             </div>
                             <div>
-                                <span class="text-zinc-500 block text-[10px] uppercase">Perfil</span>
-                                <span id="modal-foot" class="font-bold text-brand-400">-</span>
+                                <span class="text-[9px] text-zinc-500 uppercase block">Perfil</span>
+                                <span id="modal-foot" class="font-bold text-brand-orange">-</span>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-zinc-950 border-t border-zinc-850 py-4 px-6 text-center text-xs text-zinc-500">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p>&copy; 2026 Scout.Net. Prototipo creado para Juan Cruz Venadoro, Lucas Winik, Gonzalo Solarz y Santiago Soifer.</p>
+    <footer class="bg-zinc-950 border-t border-brand-border py-4 px-6 text-center text-[10px] text-zinc-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>&copy; 2026 Scout.Net. Prototipo de alto rendimiento optimizado para Santiago Soifer, Lucas Winik, Juan Cruz Venadoro y Gonzalo Solarz.</p>
             <div class="flex gap-4">
-                <a href="#" class="hover:text-brand-400 transition">Términos de servicio</a>
-                <a href="#" class="hover:text-brand-400 transition">Política de privacidad</a>
+                <a href="#" class="hover:text-brand-orange transition">Privacidad</a>
+                <a href="#" class="hover:text-brand-orange transition">Condiciones</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Switch between major sections/tabs
+        // Tab router
         function switchTab(tabId) {
             STATE.currentTab = tabId;
             
-            // Hide all tab views
-            document.querySelectorAll('main > section').forEach(section => {
-                section.classList.add('hidden');
-            });
+            // Hide all tab containers
+            document.getElementById('view-discover').classList.add('hidden');
+            document.getElementById('view-ai-scout').classList.add('hidden');
             
-            // Show current active tab view
-            const activeSection = document.getElementById(`view-${tabId}`);
-            if (activeSection) activeSection.classList.remove('hidden');
+            // Show requested
+            if (tabId === 'discover') {
+                document.getElementById('view-discover').classList.remove('hidden');
+            } else if (tabId === 'ai-scout') {
+                document.getElementById('view-ai-scout').classList.remove('hidden');
+            }
 
-            // Toggle active styles on sidebar buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = "nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200";
+            // Sync visual navigation styles
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.className = "flex-1 md:flex-initial flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all duration-150 text-zinc-400 hover:text-white hover:bg-brand-surfaceCard";
             });
+
             const activeBtn = document.getElementById(`tab-btn-${tabId}`);
             if (activeBtn) {
-                if (tabId === 'ai-scout') {
-                    activeBtn.className = "nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-neonGlow";
-                } else {
-                    activeBtn.className = "nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 w-full whitespace-nowrap bg-brand-500/10 text-brand-400 border border-brand-500/20 shadow-neonGlow";
-                }
-            }
-
-            // Custom renders depending on tab
-            if (tabId === 'discover') {
-                renderAthletesList();
-            } else if (tabId === 'messages') {
-                renderDirectMessages();
-                // Clear notification count on direct view
-                const badge = document.getElementById('msg-badge');
-                if (badge) badge.classList.add('hidden');
+                activeBtn.className = "flex-1 md:flex-initial flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all duration-150 bg-brand-orange text-white shadow-orangeGlow";
             }
         }
 
-        // Switch role views on the dashboard
+        // Switching Active Role (Prominent Top Right Button)
         function toggleRole(role) {
             STATE.userRole = role;
-            
+
             const scoutBtn = document.getElementById('role-btn-scout');
             const athleteBtn = document.getElementById('role-btn-athlete');
-            
-            const scoutSidePanel = document.getElementById('scout-side-panel');
-            const athleteSidePanel = document.getElementById('athlete-side-panel');
+            const userIcon = document.getElementById('side-user-icon');
+            const userName = document.getElementById('side-user-name');
+            const userSub = document.getElementById('side-user-sub');
 
+            const scoutSideStats = document.getElementById('scout-side-stats');
+            const athleteSideStats = document.getElementById('athlete-side-stats');
+
+            const discoverTitle = document.getElementById('discover-title');
+            const discoverDesc = document.getElementById('discover-desc');
+
+            const discoverFilters = document.getElementById('discover-filters');
+            const searchBox = document.getElementById('search-box-container');
+
+            // Toggle main views depending on role
             if (role === 'scout') {
-                scoutBtn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all duration-200 bg-brand-500 text-zinc-950 shadow";
-                athleteBtn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all duration-200 text-zinc-400 hover:text-zinc-200";
+                // Button UI Styles
+                scoutBtn.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 bg-brand-orange text-white shadow-orangeBtn";
+                athleteBtn.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-zinc-400 hover:text-white";
                 
-                scoutSidePanel.classList.remove('hidden');
-                athleteSidePanel.classList.add('hidden');
-                
-                showToast("Modo 'Club / Cazatalentos' activado. Ahora podés ver y buscar talentos.");
-            } else {
-                scoutBtn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all duration-200 text-zinc-400 hover:text-zinc-200";
-                athleteBtn.className = "px-3 py-1.5 rounded-lg font-semibold transition-all duration-200 bg-brand-500 text-zinc-950 shadow";
-                
-                scoutSidePanel.classList.add('hidden');
-                athleteSidePanel.classList.remove('hidden');
+                // Sidebar info
+                userIcon.innerHTML = `<i class="fa-solid fa-shield-halved"></i>`;
+                userName.textContent = "C.A. Excursionistas";
+                userSub.textContent = "Cazatalentos";
+                userSub.className = "text-[10px] text-brand-orange font-bold";
 
-                showToast("Modo 'Soy Deportista' activado. Podés modificar tus datos y subir tus videos.");
+                scoutSideStats.classList.remove('hidden');
+                athleteSideStats.classList.add('hidden');
+
+                // Adjust directory title
+                discoverTitle.innerHTML = `<i class="fa-solid fa-chart-line text-brand-orange"></i> Buscador de Talentos`;
+                discoverDesc.textContent = "Filtrá estadísticas auditadas y contactá directamente a las promesas deportivas.";
+
+                discoverFilters.classList.remove('hidden');
+                searchBox.classList.remove('hidden');
+
+                // Toggle tabs
+                document.getElementById('tab-btn-discover').innerHTML = `<i class="fa-solid fa-magnifying-glass text-sm"></i> <span>Descubrir Talentos</span>`;
+                document.getElementById('view-athlete-panel').classList.add('hidden');
+                switchTab('discover');
+
+                showToast("Modo 'Club / Cazatalentos' activo. Podés buscar, filtrar y guardar prospectos.");
+            } else {
+                // Button UI Styles
+                athleteBtn.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 bg-brand-orange text-white shadow-orangeBtn";
+                scoutBtn.className = "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-zinc-400 hover:text-white";
+
+                // Sidebar info
+                userIcon.innerHTML = `<i class="fa-solid fa-user-ninja"></i>`;
+                userName.textContent = "Alex Winik";
+                userSub.textContent = "Deportista Futsal";
+                userSub.className = "text-[10px] text-green-400 font-bold";
+
+                scoutSideStats.classList.add('hidden');
+                athleteSideStats.classList.remove('hidden');
+
+                // Modify directory tab when on athlete view to serve as personal dashboard
+                discoverFilters.classList.add('hidden');
+                searchBox.classList.add('hidden');
+
+                document.getElementById('tab-btn-discover').innerHTML = `<i class="fa-solid fa-id-card text-sm"></i> <span>Mi Perfil / Panel</span>`;
+                
+                // Show Athlete Panel View
+                document.getElementById('view-discover').classList.add('hidden');
+                document.getElementById('view-athlete-panel').classList.remove('hidden');
+                document.getElementById('view-ai-scout').classList.add('hidden');
+
+                // Set sidebar button style
+                document.getElementById('tab-btn-discover').className = "flex-1 md:flex-initial flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all duration-150 bg-brand-orange text-white shadow-orangeGlow";
+                document.getElementById('tab-btn-ai-scout').className = "flex-1 md:flex-initial flex items-center justify-center md:justify-start gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all duration-150 text-zinc-400 hover:text-white hover:bg-brand-surfaceCard";
+
+                showToast("Modo 'Deportista' activo. Podés autoevaluar tus habilidades y actualizar tus videos.");
             }
         }
+    </script>
 
-        // Render athletes in the Discovery Directory
-        function renderAthletesList() {
+    <script>
+        // Rendering Athlete Lists
+        function renderAthletes() {
             const container = document.getElementById('athletes-grid');
             container.innerHTML = '';
 
@@ -952,19 +871,19 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
                                       athlete.position.toLowerCase().includes(STATE.searchQuery.toLowerCase()) || 
                                       athlete.location.toLowerCase().includes(STATE.searchQuery.toLowerCase());
                 
-                const matchesSport = STATE.filterSport === 'Todos' || athlete.sport.includes(STATE.filterSport);
-                const matchesPosition = STATE.filterPosition === 'Todos' || athlete.position.includes(STATE.filterPosition);
-                const matchesRegion = STATE.filterRegion === 'Todos' || athlete.location.includes(STATE.filterRegion);
+                const matchesSport = STATE.filterSport === 'Todos' || athlete.sport.toLowerCase().includes(STATE.filterSport.toLowerCase());
+                const matchesPosition = STATE.filterPosition === 'Todos' || athlete.position.toLowerCase().includes(STATE.filterPosition.toLowerCase());
+                const matchesRegion = STATE.filterRegion === 'Todos' || athlete.location.toLowerCase().includes(STATE.filterRegion.toLowerCase());
 
                 return matchesSearch && matchesSport && matchesPosition && matchesRegion;
             });
 
             if (filtered.length === 0) {
                 container.innerHTML = `
-                    <div class="col-span-2 text-center py-10 bg-zinc-900/30 rounded-3xl border border-zinc-800 space-y-3">
-                        <i class="fa-solid fa-circle-info text-3xl text-zinc-600"></i>
-                        <p class="text-zinc-400 text-sm font-medium">No se encontraron deportistas con esos filtros.</p>
-                        <button onclick="resetFilters()" class="text-xs text-brand-400 hover:underline">Restablecer todos los filtros</button>
+                    <div class="col-span-2 text-center py-10 bg-brand-surfaceCard rounded-3xl border border-brand-border space-y-2">
+                        <i class="fa-solid fa-face-frown text-2xl text-zinc-600"></i>
+                        <p class="text-zinc-400 text-xs font-semibold">No encontramos deportistas con esos criterios.</p>
+                        <button onclick="resetFilters()" class="text-xs text-brand-orange hover:underline font-bold">Ver todos los perfiles</button>
                     </div>
                 `;
                 return;
@@ -972,64 +891,55 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
 
             filtered.forEach(athlete => {
                 const card = document.createElement('div');
-                card.className = "bg-zinc-900/40 border border-zinc-800 rounded-2xl overflow-hidden hover:border-brand-500/50 transition-all duration-300 flex flex-col justify-between";
-                
-                // Construct radar/stats short list
-                let statsMarkup = '';
-                const keys = Object.keys(athlete.stats).slice(0, 3);
-                keys.forEach(k => {
-                    statsMarkup += `
-                        <div class="flex items-center justify-between text-[11px] py-1 border-b border-zinc-800 last:border-b-0">
-                            <span class="text-zinc-400 font-medium">${k}</span>
-                            <span class="font-bold text-white">${athlete.stats[k]}</span>
-                        </div>
-                    `;
-                });
+                card.className = "bg-brand-surfaceCard border border-brand-border rounded-2xl p-4 hover:border-brand-orange transition-all duration-350 flex flex-col justify-between space-y-4 shadow-sm";
 
                 card.innerHTML = `
-                    <div class="p-5 flex gap-4 items-start">
-                        <img src="${athlete.avatar}" alt="${athlete.name}" class="w-16 h-16 rounded-xl object-cover border border-zinc-800 shrink-0">
-                        <div class="flex-1 overflow-hidden">
-                            <div class="flex justify-between items-start gap-1">
-                                <h3 class="font-bold text-white text-base truncate leading-tight">${athlete.name}</h3>
-                                <span class="bg-zinc-950 border border-zinc-800 px-2 py-0.5 rounded text-[10px] text-zinc-400 font-medium shrink-0">${athlete.age} años</span>
+                    <div class="flex items-center gap-3">
+                        <img src="${athlete.avatar}" alt="${athlete.name}" class="w-12 h-12 rounded-xl object-cover border border-brand-border shrink-0" onerror="handleImageError(this, '${athlete.name}')">
+                        <div class="overflow-hidden">
+                            <div class="flex justify-between items-baseline gap-2">
+                                <h4 class="font-bold text-white text-sm truncate leading-tight">${athlete.name}</h4>
+                                <span class="text-[10px] text-zinc-500 font-semibold shrink-0">${athlete.age} años</span>
                             </div>
-                            <p class="text-xs text-brand-400 font-semibold mt-1">${athlete.sport} — ${athlete.position}</p>
-                            <p class="text-[11px] text-zinc-500 mt-0.5 truncate"><i class="fa-solid fa-location-dot text-zinc-600 mr-1"></i>${athlete.location}</p>
+                            <p class="text-xs text-brand-orange font-bold mt-0.5">${athlete.sport} — ${athlete.position}</p>
+                            <p class="text-[10px] text-zinc-400 mt-0.5 truncate"><i class="fa-solid fa-location-dot mr-1"></i>${athlete.location}</p>
                         </div>
                     </div>
-                    
-                    <div class="px-5 pb-4">
-                        <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-850 mb-4">
-                            <h4 class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider mb-1">Métricas Clave</h4>
-                            ${statsMarkup}
+
+                    <div class="bg-brand-surface p-2.5 rounded-xl border border-brand-border space-y-1 text-[10px]">
+                        <div class="flex justify-between">
+                            <span class="text-zinc-500 font-bold uppercase">Club / Estado:</span>
+                            <span class="text-white truncate max-w-[120px] font-semibold">${athlete.clubActual}</span>
                         </div>
-                        
-                        <div class="flex gap-2">
-                            <button onclick="openAthleteModal(${athlete.id})" class="flex-1 bg-zinc-800 hover:bg-zinc-750 text-white font-semibold text-xs py-2 px-3 rounded-lg transition">
-                                Ver Perfil Técnico
-                            </button>
-                            <button onclick="toggleSaveAthlete(${athlete.id})" class="bg-zinc-950 hover:bg-zinc-900 text-zinc-300 hover:text-brand-400 font-semibold text-xs p-2 rounded-lg border border-zinc-850 transition shrink-0">
-                                <i class="${athlete.isSaved ? 'fa-solid fa-bookmark text-brand-500' : 'fa-regular fa-bookmark'}"></i>
-                            </button>
+                        <div class="flex justify-between">
+                            <span class="text-zinc-500 font-bold uppercase">Atributo clave:</span>
+                            <span class="text-brand-orange font-extrabold">${Object.keys(athlete.stats)[0]}: ${Object.values(athlete.stats)[0]}</span>
                         </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button onclick="openAthleteModal(${athlete.id})" class="flex-1 bg-brand-surface hover:bg-zinc-800 border border-brand-border text-white text-xs font-bold py-2 rounded-lg transition flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-play text-[10px] text-brand-orange"></i> Ver Video Técnico
+                        </button>
+                        <button onclick="toggleSaveAthlete(${athlete.id})" class="bg-brand-surface hover:bg-zinc-800 border border-brand-border text-zinc-400 hover:text-brand-orange p-2 rounded-lg transition shrink-0">
+                            <i class="${athlete.isSaved ? 'fa-solid fa-bookmark text-brand-orange' : 'fa-regular fa-bookmark'}"></i>
+                        </button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // Handle quick filter changes
+        function handleSearch(val) {
+            STATE.searchQuery = val;
+            renderAthletes();
+        }
+
         function applyFilter(key, value) {
             if (key === 'sport') STATE.filterSport = value;
             if (key === 'position') STATE.filterPosition = value;
             if (key === 'region') STATE.filterRegion = value;
-            renderAthletesList();
-        }
-
-        function handleSearch(val) {
-            STATE.searchQuery = val;
-            renderAthletesList();
+            renderAthletes();
         }
 
         function resetFilters() {
@@ -1037,44 +947,43 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
             STATE.filterSport = 'Todos';
             STATE.filterPosition = 'Todos';
             STATE.filterRegion = 'Todos';
-            
-            // Reset selectors
-            document.querySelectorAll('select').forEach(sel => sel.value = 'Todos');
-            const searchInput = document.querySelector('input[type="text"]');
+
+            document.getElementById('select-sport').value = 'Todos';
+            document.getElementById('select-position').value = 'Todos';
+            document.getElementById('select-region').value = 'Todos';
+
+            const searchInput = document.querySelector('#search-box-container input');
             if (searchInput) searchInput.value = '';
 
-            renderAthletesList();
-            showToast("Filtros restablecidos.");
+            renderAthletes();
+            showToast("Buscador restablecido a los valores predeterminados.");
         }
 
-        // Save / bookmark athlete
-        function toggleSaveAthlete(athleteId) {
-            const id = athleteId || STATE.selectedAthlete.id;
-            const athlete = STATE.athletes.find(a => a.id === id);
+        function toggleSaveAthlete(id) {
+            const athleteId = id || STATE.selectedAthlete.id;
+            const athlete = STATE.athletes.find(a => a.id === athleteId);
             if (!athlete) return;
 
             athlete.isSaved = !athlete.isSaved;
-            
-            // Count total saved
-            const savedCount = STATE.athletes.filter(a => a.isSaved).length;
-            const savedBadge = document.getElementById('saved-count');
-            if (savedBadge) savedBadge.textContent = `${savedCount} Atletas`;
 
-            // Update modal UI if open
+            // Sync visual badges
+            const savedCount = STATE.athletes.filter(a => a.isSaved).length;
+            document.getElementById('saved-badge-count').textContent = `${savedCount} Atletas`;
+
             const modalBtn = document.getElementById('modal-save-btn');
-            if (modalBtn && STATE.selectedAthlete && STATE.selectedAthlete.id === id) {
-                modalBtn.innerHTML = athlete.isSaved 
-                    ? `<i class="fa-solid fa-bookmark text-brand-500"></i> Guardado` 
+            if (modalBtn && STATE.selectedAthlete && STATE.selectedAthlete.id === athleteId) {
+                modalBtn.innerHTML = athlete.isSaved
+                    ? `<i class="fa-solid fa-bookmark text-brand-orange"></i> Guardado`
                     : `<i class="fa-regular fa-bookmark"></i> Guardar`;
             }
 
-            showToast(athlete.isSaved ? `${athlete.name} guardado en tu carpeta de talentos.` : `Se quitó a ${athlete.name} de guardados.`);
-            renderAthletesList();
+            renderAthletes();
+            showToast(athlete.isSaved ? `${athlete.name} guardado en favoritos.` : `Quitado ${athlete.name} de favoritos.`);
         }
     </script>
 
     <script>
-        // Open detailed view of an athlete
+        // Modal logic
         function openAthleteModal(athleteId) {
             const athlete = STATE.athletes.find(a => a.id === athleteId);
             if (!athlete) return;
@@ -1083,38 +992,41 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
 
             document.getElementById('modal-avatar').src = athlete.avatar;
             document.getElementById('modal-name').textContent = athlete.name;
-            document.getElementById('modal-sport').textContent = `${athlete.sport} — ${athlete.position}`;
+            document.getElementById('modal-sport-pos').textContent = `${athlete.sport} — ${athlete.position}`;
             document.getElementById('modal-location').textContent = athlete.location;
             document.getElementById('modal-club').textContent = athlete.clubActual;
-            document.getElementById('modal-bio').textContent = athlete.bio || "No se ha agregado una descripción para este deportista.";
+            document.getElementById('modal-bio').textContent = athlete.bio;
             document.getElementById('modal-height').textContent = athlete.height || "N/C";
             document.getElementById('modal-weight').textContent = athlete.weight || "N/C";
             document.getElementById('modal-foot').textContent = athlete.foot || "N/C";
 
-            // Render stats sliders inside modal
+            // Active Youtube Embed Link update
+            const iframe = document.getElementById('modal-youtube-iframe');
+            iframe.src = `https://www.youtube.com/embed/${athlete.youtubeId}?autoplay=0&rel=0`;
+
+            // Draw statistics
             const statsList = document.getElementById('modal-stats-list');
             statsList.innerHTML = '';
-            
-            Object.keys(athlete.stats).forEach(statName => {
-                const percent = athlete.stats[statName];
-                const statRow = document.createElement('div');
-                statRow.className = "space-y-1";
-                statRow.innerHTML = `
-                    <div class="flex justify-between text-xs font-semibold">
-                        <span class="text-zinc-300">${statName}</span>
-                        <span class="text-brand-neon font-bold">${percent}</span>
+            Object.keys(athlete.stats).forEach(k => {
+                const percent = athlete.stats[k];
+                const row = document.createElement('div');
+                row.className = "space-y-1";
+                row.innerHTML = `
+                    <div class="flex justify-between font-semibold">
+                        <span class="text-zinc-300 text-[11px]">${k}</span>
+                        <span class="text-brand-orange font-bold text-[11px]">${percent}%</span>
                     </div>
-                    <div class="w-full bg-zinc-950 h-2 rounded-full overflow-hidden border border-zinc-850">
-                        <div class="bg-gradient-to-r from-brand-600 to-brand-400 h-full rounded-full" style="width: ${percent}%"></div>
+                    <div class="w-full bg-zinc-950 h-1.5 rounded-full overflow-hidden border border-brand-border">
+                        <div class="bg-brand-orange h-full rounded-full" style="width: ${percent}%"></div>
                     </div>
                 `;
-                statsList.appendChild(statRow);
+                statsList.appendChild(row);
             });
 
-            // Set bookmark icon/text state in modal
+            // Sync bookmark btn state
             const modalBtn = document.getElementById('modal-save-btn');
-            modalBtn.innerHTML = athlete.isSaved 
-                ? `<i class="fa-solid fa-bookmark text-brand-500"></i> Guardado` 
+            modalBtn.innerHTML = athlete.isSaved
+                ? `<i class="fa-solid fa-bookmark text-brand-orange"></i> Guardado`
                 : `<i class="fa-regular fa-bookmark"></i> Guardar`;
 
             document.getElementById('athlete-modal').classList.remove('hidden');
@@ -1122,89 +1034,90 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
 
         function closeAthleteModal() {
             document.getElementById('athlete-modal').classList.add('hidden');
+            // Reset iframe url to stop playing sound
+            document.getElementById('modal-youtube-iframe').src = "";
             STATE.selectedAthlete = null;
         }
 
-        // Direct message transfer inside the mock flow
         function triggerDirectContact() {
             if (!STATE.selectedAthlete) return;
             const athleteName = STATE.selectedAthlete.name;
             closeAthleteModal();
-            switchTab('messages');
-            showToast(`Conversación abierta con el representante de ${athleteName}.`);
-        }
-
-        // Direct Messages Interface Rendering
-        function renderDirectMessages() {
-            const container = document.getElementById('messages-box-history');
-            container.innerHTML = '';
-
-            STATE.messages.forEach(msg => {
-                const messageBubble = document.createElement('div');
-                messageBubble.className = "flex flex-col gap-1 max-w-[80%] " + 
-                    (msg.sender.includes("Excursionistas") ? "self-end ml-auto" : "self-start");
-                
-                messageBubble.innerHTML = `
-                    <div class="text-[10px] text-zinc-500 px-1 ${msg.sender.includes("Excursionistas") ? "text-right" : ""}">
-                        ${msg.sender}
-                    </div>
-                    <div class="p-3.5 rounded-2xl text-xs border ${
-                        msg.sender.includes("Excursionistas") 
-                            ? "bg-brand-500/10 border-brand-500/30 text-white" 
-                            : "bg-zinc-900 border-zinc-800 text-zinc-300"
-                    }">
-                        ${msg.text}
-                    </div>
-                    <div class="text-[9px] text-zinc-600 px-1 mt-0.5 ${msg.sender.includes("Excursionistas") ? "text-right" : ""}">
-                        ${msg.time}
-                    </div>
-                `;
-                container.appendChild(messageBubble);
-            });
-
-            // Scroll to end of conversation
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function sendDirectMessage() {
-            const input = document.getElementById('direct-msg-input');
-            const text = input.value.trim();
-            if (!text) return;
-
-            // Push mock message from Scout POV
-            STATE.messages.push({
-                id: STATE.messages.length + 1,
-                sender: "Excursionistas (Coordinador)",
-                text: text,
-                time: "Ahora mismo"
-            });
-
-            input.value = '';
-            renderDirectMessages();
-
-            // Simulate automatic response after 2 seconds
-            setTimeout(() => {
-                STATE.messages.push({
-                    id: STATE.messages.length + 1,
-                    sender: "Alex Winik",
-                    text: "¡Hola! Sí, me interesa muchísimo la posibilidad de probarme en Excursionistas. Quedo atento al horario y lugar exacto. ¡Muchísimas gracias por el contacto!",
-                    time: "Ahora mismo"
-                });
-                renderDirectMessages();
-                showToast("Recibiste una nueva respuesta de Alex Winik.");
-            }, 2000);
+            showToast(`Canal abierto con el entorno de ${athleteName}.`);
         }
     </script>
 
     <script>
-        // Suggestion button handler for AI Recruiter
-        function sendSuggestion(text) {
+        // Render Messages in the right panel chat Box
+        function renderDashboardChat() {
+            const container = document.getElementById('dashboard-chat-box');
+            container.innerHTML = '';
+
+            STATE.messages.forEach(msg => {
+                const messageBubble = document.createElement('div');
+                messageBubble.className = `flex flex-col gap-0.5 max-w-[85%] ${msg.fromScout ? 'self-end ml-auto' : 'self-start'}`;
+
+                messageBubble.innerHTML = `
+                    <span class="text-[9px] text-zinc-500 font-bold uppercase ${msg.fromScout ? 'text-right' : ''}">${msg.sender}</span>
+                    <div class="p-2.5 rounded-xl border ${
+                        msg.fromScout 
+                            ? 'bg-brand-orange/10 border-brand-orange/30 text-white' 
+                            : 'bg-brand-surfaceCard border-brand-border text-zinc-200'
+                    }">
+                        ${msg.text}
+                    </div>
+                    <span class="text-[8px] text-zinc-600 ${msg.fromScout ? 'text-right' : ''} mt-0.5">${msg.time}</span>
+                `;
+                container.appendChild(messageBubble);
+            });
+
+            // Keep scrolled to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendDashboardChatMessage() {
+            const input = document.getElementById('dashboard-chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Push a message depending on selected Role
+            const isScout = STATE.userRole === 'scout';
+
+            STATE.messages.push({
+                id: STATE.messages.length + 1,
+                sender: isScout ? "C.A. Excursionistas (Coordinación)" : "Alex Winik",
+                text: text,
+                time: "Ahora mismo",
+                fromScout: isScout
+            });
+
+            input.value = '';
+            renderDashboardChat();
+
+            // Auto mock response after delay
+            setTimeout(() => {
+                STATE.messages.push({
+                    id: STATE.messages.length + 1,
+                    sender: isScout ? "Alex Winik" : "C.A. Excursionistas (Coordinación)",
+                    text: isScout 
+                        ? "¡Buenísimo! Me interesa coordinar. Decime qué día y horario me presento." 
+                        : "Hola Alex, excelente recibir tu mensaje. Mandale el contacto a tu coordinador técnico y organizamos un entrenamiento.",
+                    time: "Ahora mismo",
+                    fromScout: !isScout
+                });
+                renderDashboardChat();
+                showToast("Mensaje deportivo entrante recibido.");
+            }, 2500);
+        }
+    </script>
+
+    <script>
+        function sendAISuggestion(text) {
             const input = document.getElementById('ai-chat-input');
             input.value = text;
             handleAISubmit();
         }
 
-        // Handle sending query to Scouty
         async function handleAISubmit() {
             const input = document.getElementById('ai-chat-input');
             const text = input.value.trim();
@@ -1212,14 +1125,14 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
 
             const chatHistory = document.getElementById('ai-chat-history');
 
-            // 1. Render user message
+            // Render User bubble
             const userBubble = document.createElement('div');
-            userBubble.className = "flex gap-3 max-w-[85%] ml-auto justify-end";
+            userBubble.className = "flex gap-2.5 max-w-[85%] ml-auto justify-end";
             userBubble.innerHTML = `
-                <div class="bg-brand-500/10 p-4 rounded-2xl border border-brand-500/20 text-zinc-100 text-right">
+                <div class="bg-brand-orange/10 border border-brand-orange/30 p-3 rounded-xl text-zinc-100 text-right">
                     ${text}
                 </div>
-                <div class="w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-zinc-950 font-bold shrink-0">
+                <div class="w-7 h-7 rounded-lg bg-zinc-800 text-white flex items-center justify-center shrink-0 font-bold">
                     U
                 </div>
             `;
@@ -1227,50 +1140,49 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
             input.value = '';
             chatHistory.scrollTop = chatHistory.scrollHeight;
 
-            // 2. Render Loading Indicator
-            const loadBubble = document.createElement('div');
-            loadBubble.id = 'ai-scouty-loader';
-            loadBubble.className = "flex gap-3 max-w-[85%]";
-            loadBubble.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-zinc-950 shrink-0 font-bold">
+            // Render Loader
+            const loader = document.createElement('div');
+            loader.id = 'ai-loader-block';
+            loader.className = "flex gap-2.5 max-w-[85%]";
+            loader.innerHTML = `
+                <div class="w-7 h-7 rounded-lg bg-brand-orange text-white flex items-center justify-center shrink-0 font-bold">
                     S
                 </div>
-                <div class="bg-zinc-900 p-4 rounded-2xl border border-zinc-850 text-zinc-400 italic flex items-center gap-2">
-                    <i class="fa-solid fa-spinner animate-spin text-amber-500"></i> Scouty está analizando jugadores...
+                <div class="bg-brand-surface p-3 rounded-xl border border-brand-border text-zinc-400 italic flex items-center gap-2">
+                    <i class="fa-solid fa-spinner animate-spin text-brand-orange"></i> Buscando perfiles técnicos...
                 </div>
             `;
-            chatHistory.appendChild(loadBubble);
+            chatHistory.appendChild(loader);
             chatHistory.scrollTop = chatHistory.scrollHeight;
 
-            // 3. Make the API Call to Gemini
-            const scoutyResponse = await askScouty(text);
+            // Call API
+            const responseText = await askScouty(text);
 
-            // 4. Remove Loader
-            const loader = document.getElementById('ai-scouty-loader');
-            if (loader) loader.remove();
+            // Remove Loader
+            const existingLoader = document.getElementById('ai-loader-block');
+            if (existingLoader) existingLoader.remove();
 
-            // 5. Render AI Response
+            // Render AI response
             const aiBubble = document.createElement('div');
-            aiBubble.className = "flex gap-3 max-w-[85%]";
+            aiBubble.className = "flex gap-2.5 max-w-[85%]";
             aiBubble.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-zinc-950 shrink-0 font-bold">
+                <div class="w-7 h-7 rounded-lg bg-brand-orange text-white flex items-center justify-center shrink-0 font-bold">
                     S
                 </div>
-                <div class="bg-zinc-900 p-4 rounded-2xl border border-zinc-800/80 text-zinc-100">
-                    ${scoutyResponse.replace(/\n/g, '<br>')}
+                <div class="bg-brand-surface p-3 rounded-xl border border-brand-border text-zinc-100">
+                    ${responseText.replace(/\n/g, '<br>')}
                 </div>
             `;
             chatHistory.appendChild(aiBubble);
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
 
-        // Update visual stats sliders under user edit profile
+        // Realtime sync inputs on the athlete side
         function updateSliderLabel(statId, value) {
             const label = document.getElementById(`label-${statId}`);
             if (label) label.textContent = value;
         }
 
-        // Save modifications to the athlete profile (Alex)
         function saveAthleteProfile() {
             const name = document.getElementById('edit-name').value;
             const sport = document.getElementById('edit-sport').value;
@@ -1278,8 +1190,9 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
             const club = document.getElementById('edit-club').value;
             const location = document.getElementById('edit-location').value;
             const bio = document.getElementById('edit-bio').value;
+            const youtubeId = document.getElementById('edit-youtube').value;
 
-            // Find athlete #1 (Alex)
+            // Find Alex in state and save
             const alex = STATE.athletes.find(a => a.id === 1);
             if (alex) {
                 alex.name = name;
@@ -1288,30 +1201,38 @@ Si te piden recomendar un jugador o arquero, cita la base de datos con entusiasm
                 alex.clubActual = club;
                 alex.location = location;
                 alex.bio = bio;
+                alex.youtubeId = youtubeId;
 
-                // Update sliders metrics
+                // Update metrics from sliders
                 alex.stats["Reflejos"] = parseInt(document.getElementById('input-stat-1').value);
                 alex.stats["Mano a Mano"] = parseInt(document.getElementById('input-stat-2').value);
                 alex.stats["Juego Aéreo"] = parseInt(document.getElementById('input-stat-3').value);
                 alex.stats["Saque con pie"] = parseInt(document.getElementById('input-stat-4').value);
+
+                // Update Panel Player Embed Source
+                document.getElementById('athlete-panel-iframe').src = `https://www.youtube.com/embed/${youtubeId}?autoplay=0&rel=0`;
             }
 
-            showToast("Tu perfil de Atleta ha sido actualizado con éxito.");
-            renderAthletesList();
+            // Sync visual header if in athlete view
+            if (STATE.userRole === 'athlete') {
+                document.getElementById('side-user-name').textContent = name;
+            }
+
+            showToast("Perfil deportivo guardado y actualizado con éxito.");
+            renderAthletes();
         }
     </script>
 
     <script>
-        // Ensure initial render triggers perfectly on load
         window.onload = function() {
-            renderAthletesList();
-            renderDirectMessages();
-            // Start on discover view
+            renderAthletes();
+            renderDashboardChat();
+            // Start at discover view under Scout role
             switchTab('discover');
+            toggleRole('scout');
             
-            // Log subtle success trace
-            console.log("Scout.Net beta prototype loaded successfully. Ready for demo!");
-        };
+            console.log("Scout.Net dashboard initialised with orange, black & white sports palette!");
+        }
     </script>
 </body>
 </html>
